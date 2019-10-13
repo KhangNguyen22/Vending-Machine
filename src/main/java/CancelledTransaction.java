@@ -16,10 +16,6 @@ public class CancelledTransaction implements Transaction {
         this.item = item;
     }
 
-    public CancelledTransaction(int i, Date date, Map<Snack, Integer> snacksCart) {
-    }
-
-
     @Override
     public void getTransaction(int id) {
 
