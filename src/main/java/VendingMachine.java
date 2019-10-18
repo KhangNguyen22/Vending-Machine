@@ -79,7 +79,7 @@ public class VendingMachine {
 
                 // List Items
                 case 1:
-                    System.out.println("Items in vending machine");
+                    System.out.println("Items available: ");
                     System.out.println(vendingMachine.listItems());
                     break;
 
