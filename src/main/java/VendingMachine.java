@@ -47,6 +47,13 @@ public class VendingMachine {
             // This is a switch case right now can update later to a simpler version
             switch (option) {
 
+                // List Items
+                case 1:
+                    System.out.println("Items in vending machine");
+                    System.out.println(vendingMachine.listItems());
+                    break;
+
+
                 case 3:
                     if (vendingMachine.isAdmin()) {
                         break;
