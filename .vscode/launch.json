@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - VendingMachine",
+      "request": "launch",
+      "mainClass": "VendingMachine",
+      "projectName": "Assignment2SOFT2412"
+    }
+  ]
+}

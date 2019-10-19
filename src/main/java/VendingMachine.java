@@ -27,9 +27,6 @@ public class VendingMachine {
     // Cancelled transactions
     private ArrayList<Transaction> cancelledTransactions;
 
-    // DB url
-    private final static String DB_URL = "jdbc:mysql://localhost:3306/";
-
     // Can use a singleton later, load items from file
     private VendingMachine(int quantity) {
         transactions = new ArrayList<>();
@@ -38,38 +35,18 @@ public class VendingMachine {
         MAX_QUANTITY = quantity;
         snacks.put(Drinks.SoftDrink, 4);
         id = 1;
-
-
-        Connection connect = null;
-        // Loading to MySQL
-        try {
-            connect = DriverManager.getConnection("jdbc:mysql://db:3306/vending_machine","root","pass");
-            Statement stmt = connect.createStatement();
-            ResultSet resultSet = stmt.executeQuery("select * from whateever");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (connect != null) {
-                try {
-                    connect.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
 
-    /**
-     * Fill all the items back to maximum quantity
-     */
-    private void fill() {
-        for (Snacks snack : snacks.keySet()) {
-            snacks.put(snack, MAX_QUANTITY);
-        }
-        System.out.println("Successful fill. The date and time is: " + new Date().toString());
-    }
+    // /**
+    //  * Fill all the items back to maximum quantity
+    //  */
+    // private void fill() {
+    //     for (Snacks snack : snacks.keySet()) {
+    //         snacks.put(snack, MAX_QUANTITY);
+    //     }
+    //     System.out.println("Successful fill. The date and time is: " + new Date().toString());
+    // }
 
     /**
      * Buy the amount of snacks.
@@ -359,31 +336,32 @@ public class VendingMachine {
 
                     break;
 
-                // STAFF OPTIONS
+                // // STAFF OPTIONS
                 case 4:
-                    if (vendingMachine.isAdmin()) {
-                        System.out.println(vendingMachine.listVendingMachineStaff());
-                        String v = scan.nextLine();
-                        if (v.equals("1") || v.equalsIgnoreCase("fill")) {
-                            vendingMachine.fill();
-                        } else if (v.equals("2")) {
-                            vendingMachine.printDailyReport();
-
-                        } else if (v.equals("3")) {
-                            vendingMachine.printAvailableStock();
-
-                        } else if (v.equals("4")) {
-                            vendingMachine.printCancelledTransactions();
-
-                        } else {
-                            System.out.println("Invalid staff command.");
-                        }
-
-                    } else {
-                        System.out.println("Unauthorised, must be a staff.");
-                    }
-
                     break;
+                //     if (vendingMachine.isAdmin()) {
+                //         System.out.println(vendingMachine.listVendingMachineStaff());
+                //         String v = scan.nextLine();
+                //         if (v.equals("1") || v.equalsIgnoreCase("fill")) {
+                //             vendingMachine.fill();
+                //         } else if (v.equals("2")) {
+                //             vendingMachine.printDailyReport();
+
+                //         } else if (v.equals("3")) {
+                //             vendingMachine.printAvailableStock();
+
+                //         } else if (v.equals("4")) {
+                //             vendingMachine.printCancelledTransactions();
+
+                //         } else {
+                //             System.out.println("Invalid staff command.");
+                //         }
+
+                //     } else {
+                //         System.out.println("Unauthorised, must be a staff.");
+                //     }
+
+                    // break;
                 case 5:
                     return;
             }
