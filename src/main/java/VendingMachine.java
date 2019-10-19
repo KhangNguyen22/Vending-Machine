@@ -59,6 +59,105 @@ public class VendingMachine {
     }
 
 
+    /**
+     * Getter for isAdmin boolean
+     * @return boolean of whether user is logged in
+     */
+    private boolean isAdmin() {
+        return this.isAdmin;
+    }
+
+
+    /**
+     * Validate whether a staffs credentials are correcct
+     * @param name The username
+     * @param password The password
+     * @return boolean whether the login was successful
+     */
+    private boolean validate(String name, String password) {
+        // Default login
+        if (name.equals("beefsupreme") && password.equals("hunter2")) {
+            isAdmin = true;
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Buy the amount of snacks.
+     *  @param snack The snack to buy
+     * @param amount The amount of snacks
+     * @param pay
+     * @return amount of change
+     */
+    private double buy(Snacks snack, int amount, Double pay) {
+
+        double change = pay - snack.getPrice() * amount;
+        transactions.add(new VendingTransaction(id++, new Date(), amount, pay, change, snack.toString()));
+        System.out.println("here");
+        snacks.put(snack, snacks.get(snack) - 1);
+        System.out.println("here2");
+
+        return change;
+    }
+
+    /**
+     * List the possible payment options available
+     * @return The string of payment values.
+     */
+    private String listPayments() {
+        return "1. $20\n" +
+                "2. $10\n" +
+                "3. $5\n" +
+                "4. $2\n" +
+                "5. $1\n" +
+                "6. 50c\n" +
+                "7. 20c\n" +
+                "8. 10c\n";
+    }
+
+    /**
+     * Add cancelled transactions when a user exits out of buying a snack
+     * @param snack The snack that was cancelled
+     * @param amount The the amount of the snack.
+     */
+    private void addCancelledTransaction(Snacks snack, int amount) {
+
+        cancelledTransactions.add(new CancelledTransaction(id++, new Date(), amount, snack.getPrice() * amount, snack.toString()));
+    }
+
+    /**
+     * Calculates the amount remaining required for the purchase
+     * @param item The snack to be purchased
+     * @param paid The amount the customer is paying
+     * @param amount The number of snacks
+     * @return The remaining amount
+     */
+    private double calculateRemaining(Snacks item, double paid, int amount) {
+        return item.getPrice() * amount - paid;
+    }
+
+
+    /**
+     * Get the snack
+     * @param snackItem The id or the name of the snack
+     * @return The snack
+     */
+    private Snacks getSnack(String snackItem) {
+        int id = -1;
+        // This selects the snack by unique code or by the name.
+        for (Snacks snack : snacks.keySet()) {
+            if ((id + "").equals(snackItem) || snackItem.equalsIgnoreCase(snack.toString())) {
+                return snack;
+            }
+            id++;
+        }
+
+        return null;
+    }
+
+
     /*
      * As of now options will be
      * 1. List Items
@@ -193,101 +292,6 @@ public class VendingMachine {
 
 
         }
-    }
-
-    /**
-     * Getter for isAdmin boolean
-     * @return boolean of whether user is logged in
-     */
-    private boolean isAdmin() {
-        return this.isAdmin;
-    }
-
-
-    /**
-     * Validate whether a staffs credentials are correcct
-     * @param name The username
-     * @param password The password
-     * @return boolean whether the login was successful
-     */
-    private boolean validate(String name, String password) {
-        // Default login
-        if (name.equals("beefsupreme") && password.equals("hunter2")) {
-            isAdmin = true;
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Get the snack
-     * @param snackItem The id or the name of the snack
-     * @return The snack
-     */
-    private Snacks getSnack(String snackItem) {
-        int id = 1;
-        for (Snacks snack : snacks.keySet()) {
-            if ((id + "").equals(snackItem) || snackItem.equalsIgnoreCase(snack.toString())) {
-                return snack;
-            }
-            id++;
-        }
-
-        return null;
-    }
-
-    /**
-     * Buy the amount of snacks.
-     *  @param snack The snack to buy
-     * @param amount The amount of snacks
-     * @param pay
-     * @return amount of change
-     */
-    private double buy(Snacks snack, int amount, Double pay) {
-
-        double change = pay - snack.getPrice() * amount;
-        transactions.add(new VendingTransaction(id++, new Date(), amount, pay, change, snack.toString()));
-        System.out.println("here");
-        snacks.put(snack, snacks.get(snack) - 1);
-        System.out.println("here2");
-
-        return change;
-    }
-
-    /**
-     * List the possible payment options available
-     * @return The string of payment values.
-     */
-    private String listPayments() {
-        return "1. $20\n" +
-                "2. $10\n" +
-                "3. $5\n" +
-                "4. $2\n" +
-                "5. $1\n" +
-                "6. 50c\n" +
-                "7. 20c\n" +
-                "8. 10c\n";
-    }
-
-    /**
-     * Add cancelled transactions when a user exits out of buying a snack
-     * @param snack The snack that was cancelled
-     * @param amount The the amount of the snack.
-     */
-    private void addCancelledTransaction(Snacks snack, int amount) {
-
-        cancelledTransactions.add(new CancelledTransaction(id++, new Date(), amount, snack.getPrice() * amount, snack.toString()));
-    }
-
-    /**
-     * Calculates the amount remaining required for the purchase
-     * @param item The snack to be purchased
-     * @param paid The amount the customer is paying
-     * @param amount The number of snacks
-     * @return The remaining amount
-     */
-    private double calculateRemaining(Snacks item, double paid, int amount) {
-        return item.getPrice() * amount - paid;
     }
 
 }
