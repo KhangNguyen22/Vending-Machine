@@ -58,6 +58,8 @@ public class VendingMachine {
             return;
         }
 
+        System.out.println("Welcome to the Snack & Co. Vending Machine.\n");
+
         VendingMachine vendingMachine = new VendingMachine(10);
         Scanner scan = new Scanner(System.in);
 
