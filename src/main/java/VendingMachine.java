@@ -38,6 +38,7 @@ public class VendingMachine {
      * List out the current items in stock with quantity and prices
      * */
 
+
     private String listItems(){
         StringBuilder builder = new StringBuilder();
         int i = 1;
