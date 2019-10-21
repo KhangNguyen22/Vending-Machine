@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VendingMachine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Assignment2SOFT2412</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">VendingMachine.java</span></div><h1>VendingMachine.java</h1><pre class="source lang-java linenums">import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class VendingMachine {
+
+    // options of payment
+<span class="fc" id="L9">    private static double[] paymentOptions = new double[]{20, 10, 5, 2, 1, 0.5, 0.2, 0.1};</span>
+
+    // Cancelled transactions
+    private ArrayList&lt;Transaction&gt; cancelledTransactions;
+
+    // ID for transactions
+    private int id;
+
+    // HashMap of snack items and respective quantity
+    private HashMap&lt;Snacks, Integer&gt; snacks;
+
+    // List of transactions
+    private ArrayList&lt;Transaction&gt; transactions;
+
+    // boolean for whether the user is an admin
+    private boolean isAdmin;
+
+    // Default max amount
+<span class="nc" id="L27">    public VendingMachine(int amount) {</span>
+<span class="nc" id="L28">        snacks = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L29">        isAdmin = false;</span>
+<span class="nc" id="L30">        transactions = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L31">        cancelledTransactions = new ArrayList&lt;&gt;();</span>
+//        MAX_QUANTITY = quantity;
+<span class="nc" id="L33">        snacks.put(Drinks.SoftDrink, 4);</span>
+<span class="nc" id="L34">        id = 1;</span>
+<span class="nc" id="L35">    }</span>
+
+    /*
+     * List out the current items in stock with quantity and prices
+     * */
+
+    private String listItems(){
+<span class="nc" id="L42">        StringBuilder builder = new StringBuilder();</span>
+<span class="nc" id="L43">        int i = 1;</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        for (Snacks snack : snacks.keySet()) {</span>
+<span class="nc" id="L45">            builder.append(i++ + &quot;. &quot;).</span>
+<span class="nc" id="L46">                    append(snack).</span>
+<span class="nc" id="L47">                    append(&quot; | Price: &quot;).</span>
+
+                    // Need to unHardCode This !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+<span class="nc" id="L50">                            append(9999999);</span>
+<span class="nc" id="L51">        }</span>
+<span class="nc" id="L52">        builder.append(&quot;\n&quot;);</span>
+<span class="nc" id="L53">        return builder.toString();</span>
+    }
+
+    // Returns options of commands available
+    private String listOptions(){
+<span class="nc" id="L58">        return &quot;1. List items\n&quot; + &quot;2. Buy Item\n&quot; + &quot;3. Staff Login\n&quot; + &quot;4. Exit\n&quot; + &quot;5. Staff Options&quot;;</span>
+    }
+
+
+    /**
+     * Getter for isAdmin boolean
+     * @return boolean of whether user is logged in
+     */
+    private boolean isAdmin() {
+<span class="nc" id="L67">        return this.isAdmin;</span>
+    }
+
+
+    /**
+     * Validate whether a staffs credentials are correcct
+     * @param name The username
+     * @param password The password
+     * @return boolean whether the login was successful
+     */
+    private boolean validate(String name, String password) {
+        // Default login
+<span class="nc bnc" id="L79" title="All 4 branches missed.">        if (name.equals(&quot;beefsupreme&quot;) &amp;&amp; password.equals(&quot;hunter2&quot;)) {</span>
+<span class="nc" id="L80">            isAdmin = true;</span>
+<span class="nc" id="L81">            return true;</span>
+        }
+<span class="nc" id="L83">        return false;</span>
+    }
+
+
+    /**
+     * Buy the amount of snacks.
+     *  @param snack The snack to buy
+     * @param amount The amount of snacks
+     * @param pay
+     * @return amount of change
+     */
+    private double buy(Snacks snack, int amount, Double pay) {
+
+<span class="nc" id="L96">        double change = pay - snack.getPrice() * amount;</span>
+<span class="nc" id="L97">        transactions.add(new VendingTransaction(id++, new Date(), amount, pay, change, snack.toString()));</span>
+<span class="nc" id="L98">        System.out.println(&quot;here&quot;);</span>
+<span class="nc" id="L99">        snacks.put(snack, snacks.get(snack) - 1);</span>
+<span class="nc" id="L100">        System.out.println(&quot;here2&quot;);</span>
+
+<span class="nc" id="L102">        return change;</span>
+    }
+
+    /**
+     * List the possible payment options available
+     * @return The string of payment values.
+     */
+    private String listPayments() {
+<span class="nc" id="L110">        return &quot;1. $20\n&quot; +</span>
+                &quot;2. $10\n&quot; +
+                &quot;3. $5\n&quot; +
+                &quot;4. $2\n&quot; +
+                &quot;5. $1\n&quot; +
+                &quot;6. 50c\n&quot; +
+                &quot;7. 20c\n&quot; +
+                &quot;8. 10c\n&quot;;
+    }
+
+    /**
+     * Add cancelled transactions when a user exits out of buying a snack
+     * @param snack The snack that was cancelled
+     * @param amount The the amount of the snack.
+     */
+    private void addCancelledTransaction(Snacks snack, int amount) {
+
+<span class="nc" id="L127">        cancelledTransactions.add(new CancelledTransaction(id++, new Date(), amount, snack.getPrice() * amount, snack.toString()));</span>
+<span class="nc" id="L128">    }</span>
+
+    /**
+     * Calculates the amount remaining required for the purchase
+     * @param item The snack to be purchased
+     * @param paid The amount the customer is paying
+     * @param amount The number of snacks
+     * @return The remaining amount
+     */
+    private double calculateRemaining(Snacks item, double paid, int amount) {
+<span class="nc" id="L138">        return item.getPrice() * amount - paid;</span>
+    }
+
+
+    /**
+     * Get the snack
+     * @param snackItem The id or the name of the snack
+     * @return The snack
+     */
+    private Snacks getSnack(String snackItem) {
+<span class="nc" id="L148">        int id = -1;</span>
+        // This selects the snack by unique code or by the name.
+<span class="nc bnc" id="L150" title="All 2 branches missed.">        for (Snacks snack : snacks.keySet()) {</span>
+<span class="nc bnc" id="L151" title="All 4 branches missed.">            if ((id + &quot;&quot;).equals(snackItem) || snackItem.equalsIgnoreCase(snack.toString())) {</span>
+<span class="nc" id="L152">                return snack;</span>
+            }
+<span class="nc" id="L154">            id++;</span>
+<span class="nc" id="L155">        }</span>
+
+<span class="nc" id="L157">        return null;</span>
+    }
+
+
+    /*
+     * As of now options will be
+     * 1. List Items
+     * 2. Buy Items
+     * 3. Staff login
+     * 4. Staff options
+     * 5. Exit
+     *
+     */
+    public static void main(String[] args) {
+<span class="fc" id="L171">        boolean flag = true;</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">        if (args.length != 0) {</span>
+<span class="fc" id="L173">            System.out.println(&quot;This program does not accept any arguments.&quot;);</span>
+<span class="fc" id="L174">            return;</span>
+        }
+
+<span class="nc" id="L177">        System.out.println(&quot;Welcome to the Snack &amp; Co. Vending Machine. Hope you enjoy the experience!\n&quot;);</span>
+
+
+<span class="nc" id="L180">        VendingMachine vendingMachine = new VendingMachine(10);</span>
+<span class="nc" id="L181">        Scanner scan = new Scanner(System.in);</span>
+
+<span class="nc bnc" id="L183" title="All 2 branches missed.">        while(flag) {</span>
+
+<span class="nc" id="L185">            System.out.println(&quot;Please enter the number corresponding to the option you want.\n&quot;);</span>
+<span class="nc" id="L186">            System.out.println(vendingMachine.listOptions());</span>
+<span class="nc" id="L187">            String line = scan.nextLine();</span>
+            int option;
+            try {
+<span class="nc" id="L190">                option = Integer.parseInt(line);</span>
+<span class="nc" id="L191">            } catch (NumberFormatException e) {</span>
+<span class="nc" id="L192">                System.out.println(&quot;Invalid, please enter a number.&quot;);</span>
+<span class="nc" id="L193">                continue;</span>
+<span class="nc" id="L194">            }</span>
+
+            // This is a switch case right now can update later to a simpler version
+<span class="nc bnc" id="L197" title="All 4 branches missed.">            switch (option) {</span>
+
+                // List Items
+                case 1:
+<span class="nc" id="L201">                    System.out.println(&quot;Items available&quot;);</span>
+<span class="nc" id="L202">                    System.out.println(vendingMachine.listItems());</span>
+<span class="nc" id="L203">                    break;</span>
+
+                // BUY PRODUCT
+                case 2:
+                    // Add product name
+<span class="nc" id="L208">                    System.out.println(&quot;Please select the id of the snack you want to purchase.&quot;);</span>
+<span class="nc" id="L209">                    System.out.println(vendingMachine.listItems());</span>
+<span class="nc" id="L210">                    String i = scan.nextLine();</span>
+
+                    // Can add the ability to have more items than 1.
+<span class="nc" id="L213">                    Snacks snack = vendingMachine.getSnack(i);</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">                    if (snack == null) {</span>
+<span class="nc" id="L215">                        System.out.println(&quot;Invalid item&quot;);</span>
+<span class="nc" id="L216">                        break;</span>
+                    }
+
+                    // Fix this later on
+<span class="nc bnc" id="L220" title="All 2 branches missed.">                    if (vendingMachine.snacks.get(snack) &lt;= 0) {</span>
+<span class="nc" id="L221">                        System.out.println(&quot;Out of stock&quot;);</span>
+<span class="nc" id="L222">                        break;</span>
+                    }
+
+                    // Add as another sprint
+<span class="nc" id="L226">                    System.out.println(&quot;Please select how many you want?&quot;);</span>
+
+                    // Catch error here later
+<span class="nc" id="L229">                    int amount = Integer.parseInt(scan.nextLine());</span>
+
+<span class="nc bnc" id="L231" title="All 2 branches missed.">                    if (amount &lt;= 0) {</span>
+<span class="nc" id="L232">                        System.out.println(&quot;Invalid amount.&quot;);</span>
+<span class="nc" id="L233">                        break;</span>
+                    }
+<span class="nc bnc" id="L235" title="All 2 branches missed.">                    else if (amount &gt; vendingMachine.snacks.get(snack)) {</span>
+<span class="nc" id="L236">                        System.out.println(&quot;Not enough stock.&quot;);</span>
+<span class="nc" id="L237">                        break;</span>
+                    }
+
+
+<span class="nc" id="L241">                    System.out.println(&quot;Please enter the amount you are going to pay?&quot;);</span>
+<span class="nc" id="L242">                    double total = 0;</span>
+
+                    // Loop until successful
+                    while (true) {
+<span class="nc" id="L246">                        double remaining = vendingMachine.calculateRemaining(snack, total, amount);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">                        if (remaining &lt;= 0) {</span>
+<span class="nc" id="L248">                            System.out.println(&quot;Successful purchase. &quot; + vendingMachine.buy(snack, amount, total) + &quot; change returned.&quot;);</span>
+<span class="nc" id="L249">                            break;</span>
+                        }
+<span class="nc" id="L251">                        System.out.println(&quot;$&quot; + remaining + &quot; is remaining&quot;);</span>
+<span class="nc" id="L252">                        System.out.println(vendingMachine.listPayments());</span>
+
+<span class="nc" id="L254">                        String paymentString = scan.nextLine();</span>
+
+                        // add way to cancel
+<span class="nc bnc" id="L257" title="All 2 branches missed.">                        if (paymentString.equalsIgnoreCase(&quot;cancel&quot;)) {</span>
+<span class="nc" id="L258">                            vendingMachine.addCancelledTransaction(snack, amount);</span>
+<span class="nc" id="L259">                            break;</span>
+                        }
+
+                        // Error
+<span class="nc" id="L263">                        int v = Integer.parseInt(paymentString);</span>
+
+<span class="nc bnc" id="L265" title="All 4 branches missed.">                        if (v &lt;= 0 || v &gt; 8 ) {</span>
+<span class="nc" id="L266">                            System.out.println(&quot;Invalid option.&quot;);</span>
+<span class="nc" id="L267">                            continue;</span>
+                        }
+
+<span class="nc" id="L270">                        total += paymentOptions[v - 1];</span>
+<span class="nc" id="L271">                    }</span>
+
+                    break;
+
+                case 3:
+<span class="nc bnc" id="L276" title="All 2 branches missed.">                    if (vendingMachine.isAdmin()) {</span>
+<span class="nc" id="L277">                        break;</span>
+                    }
+
+<span class="nc" id="L280">                    System.out.println(&quot;Please enter your username.&quot;);</span>
+<span class="nc" id="L281">                    String name = scan.nextLine();</span>
+<span class="nc" id="L282">                    System.out.println(&quot;Please enter your password.&quot;);</span>
+<span class="nc" id="L283">                    String password = scan.nextLine();</span>
+
+<span class="nc bnc" id="L285" title="All 2 branches missed.">                    if (vendingMachine.validate(name, password)) {</span>
+<span class="nc" id="L286">                        System.out.println(&quot;Successfully Logged in.&quot;);</span>
+                    } else {
+<span class="nc" id="L288">                        System.out.println(&quot;Unsuccessful login.&quot;);</span>
+                    }
+
+                    break;
+            }
+
+
+<span class="nc" id="L295">        }</span>
+<span class="nc" id="L296">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
