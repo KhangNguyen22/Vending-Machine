@@ -28,9 +28,9 @@ public class VendingMachine {
     }
 
     private void initialiseProducts() {
-        inventory.put(1, new SnackAndQuantity(Drinks.SoftDrink, 5));
-        inventory.put(2, new SnackAndQuantity(Drinks.Juice, 0));
-        inventory.put(3, new SnackAndQuantity(Drinks.Water, 2));
+        inventory.put(1, new SnackAndQuantity(Drinks.SoftDrink, 10));
+        inventory.put(2, new SnackAndQuantity(Drinks.Juice, 10));
+        inventory.put(3, new SnackAndQuantity(Drinks.Water, 10));
     }
 
     /*
@@ -184,6 +184,22 @@ public class VendingMachine {
         return new VendingTransaction(currentTransactionID);
     }
 
+    void cancelTransaction(Transaction transaction) {
+
+        //give products back to inventory
+        Map<Integer, SnackAndQuantity> transactionItems = transaction.getTransactionItems();
+
+        for(Map.Entry<Integer, SnackAndQuantity> e: transactionItems.entrySet()) {
+            // add the quantity back to the inventory
+            int transactionProductID = e.getKey();
+            int productQuantityInTransaction = e.getValue().quantity;
+            SnackAndQuantity currentInventoryEntry = inventory.get(transactionProductID);
+           currentInventoryEntry.quantity = currentInventoryEntry.quantity + productQuantityInTransaction;
+        }
+
+        transaction.cancelTransaction();
+    }
+
     void handleTransaction() {
         // Add product name
         Transaction tran = initialiseNewTransaction();
@@ -209,6 +225,7 @@ public class VendingMachine {
                     break;
                 case 4:
                     System.out.println("Exiting Transaction Handler and returning to main menu");
+                    cancelTransaction(tran);
                     transactionShouldExit = true;
                     break;
             }
@@ -279,6 +296,7 @@ public class VendingMachine {
                     vendingMachine.handleLogin();
                     break;
                 case 4:
+                    System.out.println("***PROGRAM EXITING, THANK YOU COME AGAIN");
                     programShouldExit = true;
                     break;
             }
