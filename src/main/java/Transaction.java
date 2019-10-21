@@ -14,4 +14,5 @@ public interface Transaction {
 
     String getTransactionSummary();
 
+    TransactionStatus getStatus();
 }

@@ -25,6 +25,11 @@ public class VendingTransaction implements Transaction {
         return builder.toString();
     }
 
+    @Override
+    public TransactionStatus getStatus() {
+        return status;
+    }
+
     public double getTotalPrice() {
         return this.transactionTotal;
     }

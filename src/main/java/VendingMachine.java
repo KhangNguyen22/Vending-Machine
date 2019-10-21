@@ -233,6 +233,50 @@ public class VendingMachine {
         }
     }
 
+    public void handleStaffOptions() {
+
+        String option = scanner.nextLine();
+        if (option.equalsIgnoreCase("1") || option.equalsIgnoreCase("fill")) {
+            fill();
+        } else if (option.equals("2")) {
+            printDailyTransactions();
+        } else if (option.equals("4")) {
+
+        } else {
+            System.out.println("Invalid option.");
+        }
+    }
+
+
+    /**
+     * Print the daily transactions
+     */
+    public void printDailyTransactions() {
+        for (Transaction transaction : transactions) {
+            if (transaction.getStatus() == TransactionStatus.FINALISED) {
+                System.out.println(transaction.getTransactionSummary());
+            }
+        }
+    }
+
+    /**
+     * Fill all he items in the inventory
+     * Loops through the values of the hashmap and sets each to 10.
+     */
+    public void fill() {
+        for (SnackAndQuantity snack : inventory.values()) {
+            snack.quantity = 10;
+        }
+        System.out.println("Vending machine has been filled.");
+    }
+
+    public String listStaffOptions() {
+        return "1. Fill\n" +
+                "2. View Daily Transactions\n" +
+                "3. View Cancelled Transactions\n" +
+                "4. Change Product Prices\n";
+    }
+
     /*
      * As of now options will be
      * 1. List Items
@@ -281,6 +325,10 @@ public class VendingMachine {
                 case 4:
                     programShouldExit = true;
                     break;
+                case 5:
+                    System.out.println(vendingMachine.listStaffOptions());
+                    vendingMachine.handleStaffOptions();
+
             }
         }
     }
