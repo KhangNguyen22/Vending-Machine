@@ -53,6 +53,7 @@ public class VendingMachine {
         return builder.toString();
     }
 
+
     // Returns options of commands available
     private String listOptions(){
         return "1. List items\n" + "2. Buy Item\n" + "3. Staff Login\n" + "4. Exit\n" + "5. Staff Options";
@@ -170,6 +171,7 @@ public class VendingMachine {
     public static void main(String[] args) {
         boolean flag = true;
         if (args.length != 0) {
+            System.out.println("This program does not accept any arguments.");
             return;
         }
 
