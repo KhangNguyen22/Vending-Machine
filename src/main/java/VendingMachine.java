@@ -243,6 +243,11 @@ public class VendingMachine {
      * - change product price
      */
     public void handleStaffOptions() {
+        // If not admin
+        if (!isAdmin) {
+            System.out.println("You are not logged in as a staff user.");
+            return;
+        }
 
         String option = scanner.nextLine();
         if (option.equalsIgnoreCase("1") || option.equalsIgnoreCase("fill")) {
