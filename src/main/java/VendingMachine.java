@@ -253,7 +253,6 @@ public class VendingMachine {
         if (option.equalsIgnoreCase("1") || option.equalsIgnoreCase("fill")) {
             fill();
         } else if (option.equals("2")) {
-            printDailyTransactions();
         } else if (option.equals("3")) {
             // cancelled transactions
         } else if (option.equals("4")) {

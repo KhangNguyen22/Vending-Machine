@@ -79,6 +79,4 @@ public class VendingMachineTest {
         assertEquals("Please enter your username.\nPlease enter your password.\nSuccessfully Logged in.\n", baos.toString());
     }
 
-
-
 }
