@@ -92,7 +92,8 @@ public class VendingMachine {
                 "5. $1\n" +
                 "6. 50c\n" +
                 "7. 20c\n" +
-                "8. 10c\n";
+                "8. 10c\n" +
+		"99. QUIT";
     }
 
     void addProductToTransaction(Transaction transaction) {
@@ -163,10 +164,18 @@ public class VendingMachine {
 
             int v = Integer.parseInt(paymentString);
 
-            if (v <= 0 || v > 8 ) {
+	    if (v == 99){
+		    System.out.println("Quitting transaction.");
+		    System.out.println("Refunding amount of $" + amountPaidSoFar);
+		    return;
+	    }
+	    
+            else if (v <= 0 || v > 8 ) {
+		System.out.println("");
                 System.out.println("Invalid option.");
                 continue;
             }
+
 
             amountPaidSoFar += paymentOptions[v - 1];
         }
@@ -228,6 +237,7 @@ public class VendingMachine {
                     cancelTransaction(tran);
                     transactionShouldExit = true;
                     break;
+
             }
         }
 
@@ -248,6 +258,50 @@ public class VendingMachine {
         } else {
             System.out.println("Unsuccessful login.");
         }
+    }
+
+    public void handleStaffOptions() {
+
+        String option = scanner.nextLine();
+        if (option.equalsIgnoreCase("1") || option.equalsIgnoreCase("fill")) {
+            fill();
+        } else if (option.equals("2")) {
+            printDailyTransactions();
+        } else if (option.equals("4")) {
+
+        } else {
+            System.out.println("Invalid option.");
+        }
+    }
+
+
+    /**
+     * Print the daily transactions
+     */
+    public void printDailyTransactions() {
+        for (Transaction transaction : transactions) {
+            if (transaction.getStatus() == TransactionStatus.FINALISED) {
+                System.out.println(transaction.getTransactionSummary());
+            }
+        }
+    }
+
+    /**
+     * Fill all he items in the inventory
+     * Loops through the values of the hashmap and sets each to 10.
+     */
+    public void fill() {
+        for (SnackAndQuantity snack : inventory.values()) {
+            snack.quantity = 10;
+        }
+        System.out.println("Vending machine has been filled.");
+    }
+
+    public String listStaffOptions() {
+        return "1. Fill\n" +
+                "2. View Daily Transactions\n" +
+                "3. View Cancelled Transactions\n" +
+                "4. Change Product Prices\n";
     }
 
     /*
@@ -299,8 +353,13 @@ public class VendingMachine {
                     System.out.println("***PROGRAM EXITING, THANK YOU COME AGAIN");
                     programShouldExit = true;
                     break;
+                case 5:
+                    System.out.println(vendingMachine.listStaffOptions());
+                    vendingMachine.handleStaffOptions();
+
             }
         }
     }
 
 }
+

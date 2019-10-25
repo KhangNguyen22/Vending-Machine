@@ -21,4 +21,5 @@ public interface Transaction {
 
     public Map<Integer, SnackAndQuantity> getTransactionItems();
 
+
 }
