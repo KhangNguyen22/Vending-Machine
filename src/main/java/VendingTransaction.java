@@ -1,6 +1,4 @@
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class VendingTransaction implements Transaction {
 
@@ -11,6 +9,10 @@ public class VendingTransaction implements Transaction {
     private double changeGiven;
     private TransactionStatus status = TransactionStatus.PENDING;
     private double transactionTotal = 0.0;
+
+    void setStatus(TransactionStatus statusToSet) {
+        this.status = statusToSet;
+    }
 
     public VendingTransaction(int id) {
         this.id = id;
@@ -43,6 +45,18 @@ public class VendingTransaction implements Transaction {
     public void cancelTransaction() {
         this.date = new Date();
         this.status = TransactionStatus.CANCELLED;
+    }
+
+    public Map<Integer, SnackAndQuantity> getTransactionItems() {
+        return this.itemsInTransaction;
+    }
+
+    public List<SnackAndQuantity> getTransactionItemsAsList() {
+        List<SnackAndQuantity> res = new ArrayList<>();
+        for(SnackAndQuantity s: itemsInTransaction.values()) {
+            res.add(s);
+        }
+        return res;
     }
 
 

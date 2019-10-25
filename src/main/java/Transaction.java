@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.Map;
+
 public interface Transaction {
     void addProductToTransaction(int productId, Snacks snack, int quantity);
 
@@ -14,5 +17,9 @@ public interface Transaction {
 
     String getTransactionSummary();
 
-    TransactionStatus getStatus();
+    List<SnackAndQuantity> getTransactionItemsAsList();
+
+    public Map<Integer, SnackAndQuantity> getTransactionItems();
+
+
 }

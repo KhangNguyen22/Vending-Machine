@@ -193,6 +193,22 @@ public class VendingMachine {
         return new VendingTransaction(currentTransactionID);
     }
 
+    void cancelTransaction(Transaction transaction) {
+
+        //give products back to inventory
+        Map<Integer, SnackAndQuantity> transactionItems = transaction.getTransactionItems();
+
+        for(Map.Entry<Integer, SnackAndQuantity> e: transactionItems.entrySet()) {
+            // add the quantity back to the inventory
+            int transactionProductID = e.getKey();
+            int productQuantityInTransaction = e.getValue().quantity;
+            SnackAndQuantity currentInventoryEntry = inventory.get(transactionProductID);
+           currentInventoryEntry.quantity = currentInventoryEntry.quantity + productQuantityInTransaction;
+        }
+
+        transaction.cancelTransaction();
+    }
+
     void handleTransaction() {
         // Add product name
         Transaction tran = initialiseNewTransaction();
@@ -216,10 +232,12 @@ public class VendingMachine {
                     finaliseTransaction(tran);
                     transactionShouldExit = true;
                     break;
-		case 4:
-		    System.out.println("Exiting transaction handler. Returning to main menu.");
-		    transactionShouldExit = true;
-		    break;
+                case 4:
+                    System.out.println("Exiting Transaction Handler and returning to main menu");
+                    cancelTransaction(tran);
+                    transactionShouldExit = true;
+                    break;
+
             }
         }
 
@@ -332,6 +350,7 @@ public class VendingMachine {
                     vendingMachine.handleLogin();
                     break;
                 case 4:
+                    System.out.println("***PROGRAM EXITING, THANK YOU COME AGAIN");
                     programShouldExit = true;
                     break;
                 case 5:
