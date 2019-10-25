@@ -20,6 +20,7 @@ public interface Transaction {
     List<SnackAndQuantity> getTransactionItemsAsList();
 
     public Map<Integer, SnackAndQuantity> getTransactionItems();
-
+    
+    TransactionStatus getStatus();
 
 }
