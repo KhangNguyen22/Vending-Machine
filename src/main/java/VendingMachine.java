@@ -148,7 +148,7 @@ public class VendingMachine {
 
     }
 
-    void finaliseTransaction(Transaction transaction) {
+    boolean finaliseTransaction(Transaction transaction) {
         System.out.println("***FINALISING TRANSACTION***\n");
         double transactionTotal = transaction.getTotalPrice();
         System.out.println("***Transaction Summary: \n\n");
@@ -167,7 +167,7 @@ public class VendingMachine {
 	    if (v == 99){
 		    System.out.println("Quitting transaction.");
 		    System.out.println("Refunding amount of $" + amountPaidSoFar);
-		    return;
+		    return false;
 	    }
 	    
             else if (v <= 0 || v > 8 ) {
@@ -185,6 +185,7 @@ public class VendingMachine {
 
         transaction.commit(change);
         System.out.println("Transaction has been finalised.");
+	return true;
 
     }
 
@@ -229,8 +230,8 @@ public class VendingMachine {
                     System.out.println("Remove item functionality not working at this time");
                     break;
                 case 3:
-                    finaliseTransaction(tran);
-                    transactionShouldExit = true;
+                    transactionShouldExit = finaliseTransaction(tran);
+
                     break;
                 case 4:
                     System.out.println("Exiting Transaction Handler and returning to main menu");
@@ -362,4 +363,3 @@ public class VendingMachine {
     }
 
 }
-
