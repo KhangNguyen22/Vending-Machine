@@ -28,9 +28,9 @@ public class VendingMachine {
     }
 
     private void initialiseProducts() {
-        inventory.put(1, new SnackAndQuantity(Drinks.SoftDrink, 5));
-        inventory.put(2, new SnackAndQuantity(Drinks.Juice, 0));
-        inventory.put(3, new SnackAndQuantity(Drinks.Water, 2));
+        inventory.put(1, new SnackAndQuantity(Drinks.SoftDrink, 10));
+        inventory.put(2, new SnackAndQuantity(Drinks.Juice, 10));
+        inventory.put(3, new SnackAndQuantity(Drinks.Water, 10));
     }
 
     /*
@@ -92,8 +92,8 @@ public class VendingMachine {
                 "5. $1\n" +
                 "6. 50c\n" +
                 "7. 20c\n" +
-                "8. 10c\n";
-	// Add option to quit in transaction!!
+                "8. 10c\n" +
+		"99. QUIT";
     }
 
     void addProductToTransaction(Transaction transaction) {
@@ -164,10 +164,18 @@ public class VendingMachine {
 
             int v = Integer.parseInt(paymentString);
 
-            if (v <= 0 || v > 8 ) {
+	    if (v == 99){
+		    System.out.println("Quitting transaction.");
+		    System.out.println("Refunding amount of $" + amountPaidSoFar);
+		    return;
+	    }
+	    
+            else if (v <= 0 || v > 8 ) {
+		System.out.println("");
                 System.out.println("Invalid option.");
                 continue;
             }
+
 
             amountPaidSoFar += paymentOptions[v - 1];
         }
@@ -208,7 +216,10 @@ public class VendingMachine {
                     finaliseTransaction(tran);
                     transactionShouldExit = true;
                     break;
-		// Add the 4th case to exit if you want to quit transaction
+		case 4:
+		    System.out.println("Exiting transaction handler. Returning to main menu.");
+		    transactionShouldExit = true;
+		    break;
             }
         }
 
@@ -332,3 +343,4 @@ public class VendingMachine {
     }
 
 }
+
