@@ -93,6 +93,7 @@ public class VendingMachine {
                 "6. 50c\n" +
                 "7. 20c\n" +
                 "8. 10c\n";
+	// Add option to quit in transaction!!
     }
 
     void addProductToTransaction(Transaction transaction) {
@@ -207,10 +208,7 @@ public class VendingMachine {
                     finaliseTransaction(tran);
                     transactionShouldExit = true;
                     break;
-                case 4:
-                    System.out.println("Exiting Transaction Handler and returning to main menu");
-                    transactionShouldExit = true;
-                    break;
+		// Add the 4th case to exit if you want to quit transaction
             }
         }
 
