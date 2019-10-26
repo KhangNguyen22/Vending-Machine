@@ -314,9 +314,7 @@ public class VendingMachine {
                 }
             }
         }
-
         SnackAndQuantity selectedSnack = this.inventory.get(id);
-
         if (selectedSnack == null) {
             System.out.println("Invalid item");
             return;
@@ -328,6 +326,11 @@ public class VendingMachine {
         try {
             price = Double.parseDouble(scanner.nextLine());
         } catch (NumberFormatException e) {
+            System.out.println("Invalid price.");
+            return;
+        }
+
+        if (price <= 0) {
             System.out.println("Invalid price.");
             return;
         }
@@ -419,7 +422,8 @@ public class VendingMachine {
                 case 5:
                     System.out.println(vendingMachine.listStaffOptions());
                     vendingMachine.handleStaffOptions();
-
+                default:
+                    // Check for invalid another user story
             }
         }
     }
