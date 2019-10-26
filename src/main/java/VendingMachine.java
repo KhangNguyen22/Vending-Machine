@@ -157,7 +157,7 @@ public class VendingMachine {
         double amountPaidSoFar = 0.0;
 
         while(amountPaidSoFar < transactionTotal) {
-            System.out.println("Amount remaining to be paid: $" + (transactionTotal - amountPaidSoFar));
+            System.out.println("The amount you have to pay is:  $" + (transactionTotal - amountPaidSoFar));
             System.out.println("Please enter the amount you are going to pay: ");
             System.out.println(this.listPayments());
             String paymentString = scanner.nextLine();
@@ -166,12 +166,12 @@ public class VendingMachine {
 
 	    if (v == 99){
 		    System.out.println("Quitting transaction.");
-		    System.out.println("Refunding amount of $" + amountPaidSoFar);
+		    System.out.println("Refunding amount ....... $" + amountPaidSoFar);
 		    return false;
 	    }
 	    
             else if (v <= 0 || v > 8 ) {
-		System.out.println("");
+		        System.out.println("");
                 System.out.println("Invalid option.");
                 continue;
             }
