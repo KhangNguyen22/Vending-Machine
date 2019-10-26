@@ -249,6 +249,7 @@ public class VendingMachine {
             System.out.println("Already logged in");
             return;
         }
+
         System.out.println("Please enter your username.");
         String name = scanner.nextLine();
         System.out.println("Please enter your password.");
@@ -261,18 +262,79 @@ public class VendingMachine {
         }
     }
 
+    /**
+     * Handle the options for the staff
+     * Options:
+     * - fill
+     * - daily transactions
+     * - cancelled transactions
+     * - change product price
+     */
     public void handleStaffOptions() {
+        // If not admin
+        if (!isAdmin) {
+            System.out.println("You are not logged in as a staff user.");
+            return;
+        }
 
         String option = scanner.nextLine();
         if (option.equalsIgnoreCase("1") || option.equalsIgnoreCase("fill")) {
             fill();
         } else if (option.equals("2")) {
-            printDailyTransactions();
+        } else if (option.equals("3")) {
+            // cancelled transactions
         } else if (option.equals("4")) {
-
+            changeProductPrice();
         } else {
             System.out.println("Invalid option.");
         }
+    }
+
+
+    /**
+     * Change the product price. Select id then change based on snack enum
+     */
+    public void changeProductPrice() {
+
+        System.out.println("Please select the id of the snack you want to change the price for.");
+        System.out.println(listItems());
+        String i = scanner.nextLine();
+        Integer id = null;
+        try{
+            id = Integer.parseInt(i);
+        } catch(NumberFormatException e) {
+            // iterate through and get the snack matching the string provided
+            String userIn = i.toLowerCase();
+            for(Map.Entry<Integer, SnackAndQuantity> entry: inventory.entrySet()) {
+                SnackAndQuantity s = entry.getValue();
+                String currSnack = s.getSnack().toString().toLowerCase();
+
+                if(userIn.equals(currSnack)) {
+                    id = entry.getKey();
+                }
+            }
+        }
+
+        SnackAndQuantity selectedSnack = this.inventory.get(id);
+
+        if (selectedSnack == null) {
+            System.out.println("Invalid item");
+            return;
+        }
+
+        System.out.println("What would you like the new price to be?");
+        Double price;
+
+        try {
+            price = Double.parseDouble(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid price.");
+            return;
+        }
+
+        selectedSnack.getSnack().setPrice(price);
+        System.out.println("Snack price has been updated.");
+
     }
 
 

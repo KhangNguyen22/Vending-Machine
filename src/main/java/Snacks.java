@@ -4,4 +4,5 @@ public interface Snacks {
 
     public double buy(int amount, double paid);
 
+    void setPrice(Double price);
 }

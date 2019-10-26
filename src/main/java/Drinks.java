@@ -19,7 +19,10 @@ public enum Drinks implements Snacks {
         return 0;
     }
 
-
+    @Override
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
 
 }

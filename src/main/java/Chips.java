@@ -19,6 +19,10 @@ public enum Chips implements Snacks {
         return 0;
     }
 
+    @Override
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
 
 }
