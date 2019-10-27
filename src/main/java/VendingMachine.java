@@ -164,12 +164,12 @@ public class VendingMachine {
 
             int v = Integer.parseInt(paymentString);
 
-	    if (v == 99){
+            if (v == 99){
 		    System.out.println("Quitting transaction.");
 		    System.out.println("Refunding amount ....... $" + amountPaidSoFar);
 		    return false;
 	    }
-	    
+
             else if (v <= 0 || v > 8 ) {
 		        System.out.println("");
                 System.out.println("Invalid option.");
