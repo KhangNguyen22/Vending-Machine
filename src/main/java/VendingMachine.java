@@ -357,10 +357,15 @@ public class VendingMachine {
 
     void printCancelledTransactions() {
         System.out.println("*** CANCELLED TRANSACTIONS ***");
+        int num = 1;
         for (Transaction transaction : transactions) {
             if (transaction.getStatus() == TransactionStatus.CANCELLED) {
-                System.out.println(transaction.getTransactionSummary());
+                System.out.println(num + " " + transaction.getTransactionSummary());
+                num = num + 1;
             }
+        }
+        if(num == 1) {
+            System.out.println("NO CANCELLED TRANSACTIONS TO DISPLAY");
         }
     }
 
