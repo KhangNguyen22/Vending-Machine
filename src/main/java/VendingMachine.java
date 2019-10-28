@@ -285,6 +285,7 @@ public class VendingMachine {
         } else if (option.equals("2")) {
         } else if (option.equals("3")) {
             // cancelled transactions
+            printCancelledTransactions();
         } else if (option.equals("4")) {
             changeProductPrice();
         } else {
@@ -349,6 +350,15 @@ public class VendingMachine {
     public void printDailyTransactions() {
         for (Transaction transaction : transactions) {
             if (transaction.getStatus() == TransactionStatus.FINALISED) {
+                System.out.println(transaction.getTransactionSummary());
+            }
+        }
+    }
+
+    void printCancelledTransactions() {
+        System.out.println("*** CANCELLED TRANSACTIONS ***");
+        for (Transaction transaction : transactions) {
+            if (transaction.getStatus() == TransactionStatus.CANCELLED) {
                 System.out.println(transaction.getTransactionSummary());
             }
         }
