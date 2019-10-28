@@ -287,7 +287,12 @@ public class VendingMachine {
             // cancelled transactions
         } else if (option.equals("4")) {
             changeProductPrice();
-        } else {
+        } else if (option.equals("5")) {
+
+        } else if (option.equals("6")) {
+            isAdmin = false;
+        }
+        else {
             System.out.println("Invalid option.");
         }
     }
@@ -369,7 +374,9 @@ public class VendingMachine {
         return "1. Fill\n" +
                 "2. View Daily Transactions\n" +
                 "3. View Cancelled Transactions\n" +
-                "4. Change Product Prices\n";
+                "4. Change Product Prices\n" +
+                "5. Add Staff\n" +
+                "6. Logout\n";
     }
 
     /*
