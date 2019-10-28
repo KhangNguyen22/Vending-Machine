@@ -277,6 +277,8 @@ public class VendingMachine {
             return;
         }
 
+        System.out.println("\nStaff Options\n");
+        System.out.println(listStaffOptions());
         String option = scanner.nextLine();
         if (option.equalsIgnoreCase("1") || option.equalsIgnoreCase("fill")) {
             fill();
@@ -420,7 +422,7 @@ public class VendingMachine {
                     programShouldExit = true;
                     break;
                 case 5:
-                    System.out.println(vendingMachine.listStaffOptions());
+
                     vendingMachine.handleStaffOptions();
                 default:
                     // Check for invalid another user story
