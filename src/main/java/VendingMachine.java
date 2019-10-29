@@ -32,7 +32,7 @@ public class VendingMachine {
     public VendingMachine(int maxItemCapacity) {
 //        snacks = new HashMap<>();
         isAdmin = false;
-        this.user = new User(Privilege.USER, "", "");
+        this.user = new User();
         User superUser = new User(Privilege.SUPERUSER, "beefsupreme", "hunter2");
         staff = new HashMap<>();
         staff.put("beefsupreme", superUser);
