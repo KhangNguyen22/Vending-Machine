@@ -395,6 +395,10 @@ public class VendingMachine {
 
     public void addStaff() {
 
+        if (this.user.getPrivilege() != Privilege.SUPERUSER) {
+            System.out.println("Only superuser can create staff.");
+            return;
+        }
         // Ask for username
         System.out.println("Enter the desired username.");
         String username = scanner.nextLine();
