@@ -70,7 +70,7 @@ public class VendingMachineTest {
 
     @Test
     public void testAlreadyLoggedIn() {
-        System.setIn(new ByteArrayInputStream("beefsupreme\nhunter2".getBytes()));
+        System.setIn(new ByteArrayInputStream("beefsupreme\nhunter2\n".getBytes()));
         VendingMachine vendingMachine = new VendingMachine(10);
         vendingMachine.handleLogin();
         vendingMachine.handleLogin();

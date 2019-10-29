@@ -1,3 +1,5 @@
+import javax.jws.soap.SOAPBinding;
+
 public class User {
 
     private String username;
@@ -8,6 +10,12 @@ public class User {
         this.privilege = privilege;
         this.username = username;
         this.password = password;
+    }
+
+    public User() {
+        this.privilege = Privilege.USER;
+        this.username = null;
+        this.password = null;
     }
 
     public Privilege getPrivilege() {
