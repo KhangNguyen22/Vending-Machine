@@ -306,6 +306,8 @@ public class VendingMachine {
             changeProductPrice();
         } else if (option.equals("5")) {
             addStaff();
+        } else if (option.equals("6")) {
+            logout();
         } else {
             System.out.println("Invalid option.");
         }
@@ -392,6 +394,19 @@ public class VendingMachine {
                 "6. Logout\n";
     }
 
+    /**
+     * Logout by setting user to a new user
+     */
+    public void logout() {
+        this.user = new User();
+        System.out.println("Successfully logged out.\n");
+    }
+
+
+    /**
+     * Add user to the staff map if they are a superuser.
+     *
+     */
     public void addStaff() {
 
         if (this.user.getPrivilege() != Privilege.SUPERUSER) {

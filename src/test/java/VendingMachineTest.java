@@ -91,7 +91,9 @@ public class VendingMachineTest {
         assertEquals("1. Fill\n" +
                 "2. View Daily Transactions\n" +
                 "3. View Cancelled Transactions\n" +
-                "4. Change Product Prices\n", new VendingMachine(10).listStaffOptions());
+                "4. Change Product Prices\n" +
+                "5. Add staff\n" +
+                "6. Logout\n", new VendingMachine(10).listStaffOptions());
     }
 
     @Test

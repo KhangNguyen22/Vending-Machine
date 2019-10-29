@@ -1,5 +1,3 @@
-import javax.jws.soap.SOAPBinding;
-
 public class User {
 
     private String username;
