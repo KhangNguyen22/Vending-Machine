@@ -70,7 +70,7 @@ public class VendingMachineTest {
 
     @Test
     public void testAlreadyLoggedIn() {
-        System.setIn(new ByteArrayInputStream("beefsupreme\nhunter2".getBytes()));
+        System.setIn(new ByteArrayInputStream("beefsupreme\nhunter2\n".getBytes()));
         VendingMachine vendingMachine = new VendingMachine(10);
         vendingMachine.handleLogin();
         vendingMachine.handleLogin();
@@ -91,7 +91,9 @@ public class VendingMachineTest {
         assertEquals("1. Fill\n" +
                 "2. View Daily Transactions\n" +
                 "3. View Cancelled Transactions\n" +
-                "4. Change Product Prices\n", new VendingMachine(10).listStaffOptions());
+                "4. Change Product Prices\n" +
+                "5. Add staff\n" +
+                "6. Logout\n", new VendingMachine(10).listStaffOptions());
     }
 
     @Test
