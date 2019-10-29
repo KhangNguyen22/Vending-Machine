@@ -20,7 +20,6 @@ public class VendingMachine {
     private List<Transaction> transactions = new ArrayList<>();
 
     // boolean for whether the user is an admin
-    private boolean isAdmin;
 
     // Current user
     private User user;
@@ -31,7 +30,6 @@ public class VendingMachine {
     // Default max amount
     public VendingMachine(int maxItemCapacity) {
 //        snacks = new HashMap<>();
-        isAdmin = false;
         this.user = new User();
         User superUser = new User(Privilege.SUPERUSER, "beefsupreme", "hunter2");
         staff = new HashMap<>();
@@ -72,7 +70,7 @@ public class VendingMachine {
      * @return boolean of whether user is logged in
      */
     boolean isAdmin() {
-        return this.isAdmin;
+        return this.user.getPrivilege() == Privilege.STAFF || this.user.getPrivilege() == Privilege.SUPERUSER;
     }
 
 
@@ -91,7 +89,6 @@ public class VendingMachine {
 
         User user = staff.get(name);
         if (user.getUsername().equals(name) && user.getPassword().equals(password)) {
-            isAdmin = true;
             return true;
         }
         return false;
@@ -264,7 +261,7 @@ public class VendingMachine {
     void handleLogin() {
 
 
-        if (this.user.getPrivilege() == Privilege.STAFF || this.user.getPrivilege() == Privilege.SUPERUSER) {
+        if (isAdmin()) {
             System.out.println("Already logged in");
             return;
         }
@@ -292,7 +289,7 @@ public class VendingMachine {
      */
     public void handleStaffOptions() {
         // If not admin
-        if (!isAdmin) {
+        if (!isAdmin()) {
             System.out.println("You are not logged in as a staff user.");
             return;
         }
