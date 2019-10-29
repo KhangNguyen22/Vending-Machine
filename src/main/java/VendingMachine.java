@@ -1,3 +1,5 @@
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import java.util.*;
 
 public class VendingMachine {
@@ -20,10 +22,20 @@ public class VendingMachine {
     // boolean for whether the user is an admin
     private boolean isAdmin;
 
+    // Current user
+    private User user;
+
+    // HashMap of usernames to users
+    private Map<String, User> staff;
+
     // Default max amount
     public VendingMachine(int maxItemCapacity) {
 //        snacks = new HashMap<>();
         isAdmin = false;
+        this.user = new User(Privilege.USER, "", "");
+        User superUser = new User(Privilege.SUPERUSER, "beefsupreme", "hunter2");
+        staff = new HashMap<>();
+        staff.put("beefsupreme", superUser);
         initialiseProducts();
     }
 
@@ -73,7 +85,12 @@ public class VendingMachine {
      */
     boolean validate(String name, String password) {
         // Default login
-        if (name.equals("beefsupreme") && password.equals("hunter2")) {
+        if (!staff.containsKey(name)) {
+            return false;
+        }
+
+        User user = staff.get(name);
+        if (user.getUsername().equals(name) && user.getPassword().equals(password)) {
             isAdmin = true;
             return true;
         }
@@ -245,7 +262,9 @@ public class VendingMachine {
     }
 
     void handleLogin() {
-        if (this.isAdmin()) {
+
+
+        if (this.user.getPrivilege() == Privilege.STAFF || this.user.getPrivilege() == Privilege.SUPERUSER) {
             System.out.println("Already logged in");
             return;
         }
@@ -257,6 +276,7 @@ public class VendingMachine {
 
         if (this.validate(name, password)) {
             System.out.println("Successfully Logged in.");
+            this.user = staff.get(name);
         } else {
             System.out.println("Unsuccessful login.");
         }
@@ -287,11 +307,12 @@ public class VendingMachine {
             // cancelled transactions
         } else if (option.equals("4")) {
             changeProductPrice();
+        } else if (option.equals("5")) {
+            addStaff();
         } else {
             System.out.println("Invalid option.");
         }
     }
-
 
     /**
      * Change the product price. Select id then change based on snack enum
@@ -370,6 +391,43 @@ public class VendingMachine {
                 "2. View Daily Transactions\n" +
                 "3. View Cancelled Transactions\n" +
                 "4. Change Product Prices\n";
+    }
+
+    public void addStaff() {
+
+        // Ask for username
+        System.out.println("Enter the desired username.");
+        String username = scanner.nextLine();
+
+        // Check if username exists
+        if (staff.containsKey(username)) {
+            System.out.println("Username already exists. Exiting menu.");
+            return;
+        }
+
+        // Ask for password
+        System.out.println("Enter the desired password.");
+        String password = scanner.nextLine();
+
+        // Select type of user
+        System.out.println("Please select the option you want.\n");
+        System.out.println("1. Add as Staff\n" +
+                "2. Add as Superuser\n");
+
+        String option = scanner.nextLine();
+        Privilege privilege;
+        if (option.equals("1")) {
+            privilege = Privilege.STAFF;
+        } else if (option.equals("2")) {
+            privilege = Privilege.SUPERUSER;
+        } else {
+            System.out.println("Invalid option. Exiting menu");
+            return;
+        }
+
+        staff.put(username, new User(privilege, username, password));
+        System.out.println("Successfully added user.");
+
     }
 
     /*
