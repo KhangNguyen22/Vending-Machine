@@ -387,7 +387,9 @@ public class VendingMachine {
         return "1. Fill\n" +
                 "2. View Daily Transactions\n" +
                 "3. View Cancelled Transactions\n" +
-                "4. Change Product Prices\n";
+                "4. Change Product Prices\n" +
+                "5. Add staff\n" +
+                "6. Logout\n";
     }
 
     public void addStaff() {
