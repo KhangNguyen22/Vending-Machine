@@ -28,6 +28,17 @@ public class VendingTransaction implements Transaction {
     }
 
     @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("TRANSACTION STATUS: " + this.status + "\n");
+        if(this.status != TransactionStatus.PENDING) {
+            builder.append("TRANSACTION DATE: " + this.date);
+        }
+        builder.append(getTransactionSummary());
+        return builder.toString();
+    }
+
+    @Override
     public TransactionStatus getStatus() {
         return status;
     }
@@ -75,4 +86,6 @@ public class VendingTransaction implements Transaction {
     public void removeProductFromTransaction(Snacks snack, int quantity) {
 
     }
+
+
 }
