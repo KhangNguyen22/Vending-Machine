@@ -32,7 +32,7 @@ public class VendingTransaction implements Transaction {
         StringBuilder builder = new StringBuilder();
         builder.append("TRANSACTION STATUS: " + this.status + "\n");
         if(this.status != TransactionStatus.PENDING) {
-            builder.append("TRANSACTION DATE: " + this.date);
+            builder.append("TRANSACTION DATE: " + this.date + "\n");
         }
         builder.append(getTransactionSummary());
         return builder.toString();
