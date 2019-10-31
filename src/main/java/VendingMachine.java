@@ -2,8 +2,6 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.util.*;
 
-import java.text.*;
-
 public class VendingMachine {
     Scanner scanner = new Scanner(System.in);
 
@@ -399,10 +397,7 @@ public class VendingMachine {
         for (SnackAndQuantity snack : inventory.values()) {
             snack.quantity = 10;
         }
-	SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'at' HH:mm:ss z");
-	Date date = new Date(System.currentTimeMillis());
-	System.out.println("Success!! ");
-        System.out.println("Vending machine has been filled on the date " + formatter.format(date));
+        System.out.println("Vending machine has been filled.");
     }
 
     public String listStaffOptions() {
