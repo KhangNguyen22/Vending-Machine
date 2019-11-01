@@ -523,6 +523,7 @@ public class VendingMachine {
                     if (vendingMachine.isAdmin()) {
                         vendingMachine.logout();
                     }
+                    break;
                 default:
                     // Check for invalid another user story
             }
