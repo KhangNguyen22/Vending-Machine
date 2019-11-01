@@ -62,7 +62,7 @@ public class VendingMachine {
     }
 
     String listTransactionOptions() {
-        return "1. Add Item\n" + "2. Remove Item\n" + "3. Finalise Transaction\n" + "4. Discard Transaction and Exit\n";
+        return "1. Add Item\n" + "2. Finalise Transaction\n" + "3. Discard Transaction and Exit\n";
     }
 
     /**
@@ -241,13 +241,9 @@ public class VendingMachine {
                     addProductToTransaction(tran);
                     break;
                 case 2:
-                    System.out.println("Remove item functionality not working at this time");
+                    transactionShouldExit = finaliseTransaction(tran);
                     break;
                 case 3:
-                    transactionShouldExit = finaliseTransaction(tran);
-
-                    break;
-                case 4:
                     System.out.println("Exiting Transaction Handler and returning to main menu");
                     cancelTransaction(tran);
                     transactionShouldExit = true;
