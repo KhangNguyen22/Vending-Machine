@@ -58,7 +58,11 @@ public class VendingMachine {
 
     // Returns options of commands available
     String listOptions(){
-        return "1. List items\n" + "2. Buy Item\n" + "3. Staff Login\n" + "4. Exit\n" + "5. Staff Options";
+        String options = "1. List items\n" + "2. Buy Item\n" + "3. Staff Login\n" + "4. Exit\n" + "5. Staff Options";
+        if (this.user.getPrivilege() != Privilege.USER) {
+            options += "\n6. Logout";
+        }
+        return options;
     }
 
     String listTransactionOptions() {
@@ -515,6 +519,10 @@ public class VendingMachine {
                 case 5:
 
                     vendingMachine.handleStaffOptions();
+                case 6:
+                    if (vendingMachine.isAdmin()) {
+                        vendingMachine.logout();
+                    }
                 default:
                     // Check for invalid another user story
             }
