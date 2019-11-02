@@ -15,11 +15,6 @@ public enum Drinks implements Snacks {
     }
 
     @Override
-    public double buy(int amount, double paid) {
-        return 0;
-    }
-
-    @Override
     public void setPrice(Double price) {
         this.price = price;
     }
