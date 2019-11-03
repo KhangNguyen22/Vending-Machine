@@ -1,4 +1,4 @@
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+//import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.util.*;
 
@@ -49,6 +49,9 @@ public class VendingMachine {
      * List out the current items in stock with quantity and prices
      * */
     String listItems() {
+        System.out.println("");
+        System.out.println("Snack -- Price -- Stock");
+        System.out.println("");
         StringBuilder builder = new StringBuilder();
         for(Map.Entry<Integer, SnackAndQuantity> entry: inventory.entrySet()) {
             SnackAndQuantity snackAndQuantity = entry.getValue();
