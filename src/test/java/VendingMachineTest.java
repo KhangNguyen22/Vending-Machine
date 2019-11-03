@@ -179,7 +179,7 @@ public class VendingMachineTest {
                 "Please enter the number corresponding to the option you want.\n\n" +
                 vendingMachine.listOptions() + "\n";
 
-
+        System.setIn(new ByteArrayInputStream("".getBytes()));
         try {
             VendingMachine.main(new String[]{});
         } catch (Exception ignored) {
