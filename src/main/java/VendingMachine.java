@@ -525,6 +525,7 @@ public class VendingMachine {
                 case 5:
 
                     vendingMachine.handleStaffOptions();
+                    break;
                 case 6:
                     if (vendingMachine.isAdmin()) {
                         vendingMachine.logout();
