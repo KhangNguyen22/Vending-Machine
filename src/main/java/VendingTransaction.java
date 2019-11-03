@@ -21,7 +21,7 @@ public class VendingTransaction implements Transaction {
     public String getTransactionSummary() {
         StringBuilder builder = new StringBuilder();
         for(SnackAndQuantity s: itemsInTransaction.values()) {
-            String item = "Snack: " + s.getSnack().toString() + " | Quantity: " + s.quantity + " | Subtotal: " + s.quantity * s.getSnack().getPrice() + "\n";
+            String item = "Snack: " + s.getSnack().toString() + " | Quantity: " + s.quantity + " | Subtotal: " + s.getSnack().getPrice() * s.quantity + "\n";
             builder.append(item);
         }
         return builder.toString();
@@ -32,9 +32,13 @@ public class VendingTransaction implements Transaction {
         StringBuilder builder = new StringBuilder();
         builder.append("TRANSACTION STATUS: " + this.status + "\n");
         if(this.status != TransactionStatus.PENDING) {
-            builder.append("TRANSACTION DATE: " + this.date);
+            builder.append("TRANSACTION DATE: " + this.date + "\n");
         }
+
         builder.append(getTransactionSummary());
+        if (this.status == TransactionStatus.FINALISED) {
+            builder.append("Change Given: " + changeGiven + "\n");
+        }
         return builder.toString();
     }
 
@@ -49,7 +53,7 @@ public class VendingTransaction implements Transaction {
 
     public void commit(double changeGiven) {
         this.date = new Date();
-
+        this.changeGiven = changeGiven;
         this.status = TransactionStatus.FINALISED;
     }
 

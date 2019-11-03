@@ -300,6 +300,7 @@ public class VendingMachine {
         if (option.equalsIgnoreCase("1") || option.equalsIgnoreCase("fill")) {
             fill();
         } else if (option.equals("2")) {
+            printDailyTransactions();
         } else if (option.equals("3")) {
             // cancelled transactions
             printCancelledTransactions();
@@ -370,7 +371,7 @@ public class VendingMachine {
     public void printDailyTransactions() {
         for (Transaction transaction : transactions) {
             if (transaction.getStatus() == TransactionStatus.FINALISED) {
-                System.out.println(transaction.getTransactionSummary());
+                System.out.println(transaction);
             }
         }
     }
