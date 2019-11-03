@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
@@ -40,7 +42,7 @@ public class VendingMachineTest {
 
     @Test
     public void testListTransactions() {
-        String expected = "1. Add Item\n" + "2. Remove Item\n" + "3. Finalise Transaction\n" + "4. Discard Transaction and Exit\n";
+        String expected = "1. Add Item\n" + "2. Finalise Transaction\n" + "3. Discard Transaction and Exit\n";
         assertEquals(expected, vendingMachine.listTransactionOptions());
     }
 
@@ -100,7 +102,11 @@ public class VendingMachineTest {
     public void testFillPrint() {
         VendingMachine vendingMachine = new VendingMachine(10);
         vendingMachine.fill();
-        assertEquals("Vending machine has been filled.\n", baos.toString());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        String result = "Vending machine has been filled on the date " + formatter.format(date);
+
+        assertEquals("Success!! \n" + result +"\n", baos.toString());
     }
 
     @Test
