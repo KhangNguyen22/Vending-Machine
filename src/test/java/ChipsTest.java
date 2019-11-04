@@ -28,6 +28,7 @@ public class ChipsTest {
     public void testSetPriceOriginal() {
         Chips.Original.setPrice(20.0);
         assertEquals(20, Chips.Original.getPrice(), 0.1);
+        Chips.Original.setPrice(10.0);
     }
 
 }
