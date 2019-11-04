@@ -27,6 +27,7 @@ jacocoTestReport {
     }
 }
 
+
 test {
     test.finalizedBy jacocoTestReport
 }
