@@ -21,8 +21,6 @@ public class VendingMachine {
     // Lists of transactions
     private List<Transaction> transactions = new ArrayList<>();
 
-    // boolean for whether the user is an admin
-
     // Current user
     private User user;
 
@@ -43,8 +41,18 @@ public class VendingMachine {
         inventory.put(1, new SnackAndQuantity(Drinks.SoftDrink, 10));
         inventory.put(2, new SnackAndQuantity(Drinks.Juice, 10));
         inventory.put(3, new SnackAndQuantity(Drinks.Water, 10));
-    }
-
+        inventory.put(4, new SnackAndQuantity(Chocolates.MChocolate, 10));
+        inventory.put(5, new SnackAndQuantity(Chocolates.Bounty, 10)); 
+        inventory.put(6, new SnackAndQuantity(Chocolates.Mars, 10));
+        inventory.put(7, new SnackAndQuantity(Chocolates.Sneakers, 10));
+        inventory.put(8, new SnackAndQuantity(Chips.Original, 10));
+        inventory.put(9, new SnackAndQuantity(Chips.Chicken, 10));
+        inventory.put(10, new SnackAndQuantity(Chips.BBQ, 10));
+        inventory.put(11, new SnackAndQuantity(Chips.SweetChilli, 10));
+        inventory.put(12, new SnackAndQuantity(Lollies.SourWorms, 10));
+        inventory.put(13, new SnackAndQuantity(Lollies.JellyBeans, 10));
+        inventory.put(14, new SnackAndQuantity(Lollies.LittleBears, 10));
+        inventory.put(15, new SnackAndQuantity(Lollies.PartMix, 10));}
     /*
      * List out the current items in stock with quantity and prices
      * */

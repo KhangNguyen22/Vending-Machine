@@ -4,7 +4,6 @@ import java.util.Map;
 public interface Transaction {
     void addProductToTransaction(int productId, Snacks snack, int quantity);
 
-    void removeProductFromTransaction(Snacks snack, int quantity);
 
     /**
      * Method which commits the transaction to storage
