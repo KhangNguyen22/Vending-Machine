@@ -28,5 +28,6 @@ public class ChocolatesTest {
     public void testBountySetPrice() {
         Chocolates.Bounty.setPrice(20.0);
         assertEquals(20.0, Chocolates.Bounty.getPrice(), 0.1);
+        Chocolates.Bounty.setPrice(10.0);
     }
 }
