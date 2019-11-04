@@ -214,6 +214,16 @@ public class VendingMachineTest {
         assertEquals(result, baos.toString());
     }
 
+    @Test
+
+    public void testAddTransactions(){
+        System.setIn(new ByteArrayInputStream("1\n-1".getBytes()));
+        VendingMachine vendingMachine = new VendingMachine(10);
+        Transaction tran = vendingMachine.initialiseNewTransaction();
+        vendingMachine.addProductToTransaction(tran);
+        assertEquals("cat",baos.toString());
+    }
+
 
 
 }

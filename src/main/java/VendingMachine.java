@@ -52,8 +52,7 @@ public class VendingMachine {
         inventory.put(12, new SnackAndQuantity(Lollies.SourWorms, 10));
         inventory.put(13, new SnackAndQuantity(Lollies.JellyBeans, 10));
         inventory.put(14, new SnackAndQuantity(Lollies.LittleBears, 10));
-        inventory.put(15, new SnackAndQuantity(Lollies.PartMix, 10));
-    }
+        inventory.put(15, new SnackAndQuantity(Lollies.PartMix, 10));}
     /*
      * List out the current items in stock with quantity and prices
      * */
