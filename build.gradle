@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'application'
 }
 
 version '1.0-SNAPSHOT'
@@ -30,4 +31,10 @@ jacocoTestReport {
 
 test {
     test.finalizedBy jacocoTestReport
+}
+
+mainClassName = 'VendingMachine'
+
+run{
+    standardInput = System.in
 }
