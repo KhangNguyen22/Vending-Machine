@@ -265,6 +265,16 @@ public class VendingMachineTest {
         vendingMachine.addProductToTransaction(tran);
         assertEquals(result,baos.toString());
     }
-   
 
+    @Test
+    public void testPrintDailyTransactionsEmpty() {
+        vendingMachine.printDailyTransactions();
+        assertEquals("", baos.toString());
+    }
+
+    @Test
+    public void testPrintCancelledTransactionsEmpt() {
+        vendingMachine.printCancelledTransactions();
+        assertEquals("*** CANCELLED TRANSACTIONS ***\nNO CANCELLED TRANSACTIONS TO DISPLAY\n", baos.toString());
+    }
 }
