@@ -350,6 +350,33 @@ public class VendingMachineTest {
         assertEquals(result, baos.toString());
     }
 
+    @Test
+    public void testFinaliseTransactionInvalid2() {
+
+        System.setIn(new ByteArrayInputStream("9\n1".getBytes()));
+
+        VendingMachine vendingMachine = new VendingMachine(10);
+
+        Transaction transaction = new VendingTransaction(1);
+        transaction.addProductToTransaction(1, Drinks.Juice, 1);
+
+        String result = "***FINALISING TRANSACTION***\n\n***Transaction Summary: \n\n\n" +
+                transaction.getTransactionSummary() +
+                "\nThe total for this transaction is: " + 10.0 +
+                "\nThe amount you have to pay is:  $" + 10.0 +
+                "\nPlease enter the amount you are going to pay: \n" +
+                vendingMachine.listPayments() +
+                "\n\nInvalid option." +
+                "\nThe amount you have to pay is:  $" + 10.0 +
+                "\nPlease enter the amount you are going to pay: \n" +
+                vendingMachine.listPayments() +
+                "\nChange due: 10.0" +
+                "\nTransaction has been finalised.\n";
+
+        vendingMachine.finaliseTransaction(transaction);
+        assertEquals(result, baos.toString());
+    }
+
 
     @Test
     public void testHandleStartOption() {
@@ -570,17 +597,6 @@ public class VendingMachineTest {
                 "Username already exists. Exiting menu.\n", baos.toString());
     }
 
-    @Test
-    public void vendingMachineStart() {
-
-        System.setIn(new ByteArrayInputStream("3\n".getBytes()));
-        try {
-            VendingMachine.main(new String[]{});
-        } catch (Exception e) {
-
-        }
-
-    }
 
     @Test
     public void testValidateIncorrect() {
@@ -592,14 +608,126 @@ public class VendingMachineTest {
     }
 
     @Test
-    public void vendingMachineStartListItems() {
+    public void testValidateIncorrect2() {
 
-        System.setIn(new ByteArrayInputStream("1\n".getBytes()));
+        VendingMachine vendingMachine = new VendingMachine(10);
+
+        assertFalse(vendingMachine.validate("beefsupreme", "supommm,iiop"));
+
+    }
+
+    @Test
+    public void testHandleTransactions() {
+
+        System.setIn(new ByteArrayInputStream("1\n-1\n".getBytes()));
+
+        VendingMachine vendingMachine = new VendingMachine(10);
         try {
-            VendingMachine.main(new String[]{});
+            vendingMachine.handleTransaction();
         } catch (Exception e) {
 
         }
+
+        assertEquals("TRANSACTION INITIALISED\n" +
+                "\n" +
+                "\n" +
+                "***Which action would you like to take?***\n" +
+                "1. Add Item\n" +
+                "2. Finalise Transaction\n" +
+                "3. Discard Transaction and Exit\n" +
+                "\n" +
+                "Please select the id of the snack you want to purchase.\n" +
+                "\n" +
+                "Snack -- Price -- Stock\n" +
+                "1: SoftDrink | Price: 10.0 | Stock: 10\n" +
+                "2: Juice | Price: 10.0 | Stock: 10\n" +
+                "3: Water | Price: 10.0 | Stock: 10\n" +
+                "4: MChocolate | Price: 10.0 | Stock: 10\n" +
+                "5: Bounty | Price: 10.0 | Stock: 10\n" +
+                "6: Mars | Price: 10.0 | Stock: 10\n" +
+                "7: Sneakers | Price: 10.0 | Stock: 10\n" +
+                "8: Original | Price: 10.0 | Stock: 10\n" +
+                "9: Chicken | Price: 10.0 | Stock: 10\n" +
+                "10: BBQ | Price: 14.0 | Stock: 10\n" +
+                "11: SweetChilli | Price: 10.0 | Stock: 10\n" +
+                "12: SourWorms | Price: 2.0 | Stock: 10\n" +
+                "13: JellyBeans | Price: 2.5 | Stock: 10\n" +
+                "14: LittleBears | Price: 1.6 | Stock: 10\n" +
+                "15: PartMix | Price: 1.5 | Stock: 10\n" +
+                "\n" +
+                "Invalid item\n" +
+                "\n" +
+                "\n" +
+                "***Which action would you like to take?***\n" +
+                "1. Add Item\n" +
+                "2. Finalise Transaction\n" +
+                "3. Discard Transaction and Exit\n\n", baos.toString());
+    }
+
+
+    @Test
+    public void testHandleTransactions2() {
+
+        System.setIn(new ByteArrayInputStream("4\n2\n-1\n".getBytes()));
+
+        VendingMachine vendingMachine = new VendingMachine(10);
+        try {
+            vendingMachine.handleTransaction();
+        } catch (Exception e) {
+
+        }
+
+        assertEquals("TRANSACTION INITIALISED\n" +
+                "\n" +
+                "\n" +
+                "***Which action would you like to take?***\n" +
+                "1. Add Item\n" +
+                "2. Finalise Transaction\n" +
+                "3. Discard Transaction and Exit\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "***Which action would you like to take?***\n" +
+                "1. Add Item\n" +
+                "2. Finalise Transaction\n" +
+                "3. Discard Transaction and Exit\n" +
+                "\n" +
+                "***FINALISING TRANSACTION***\n" +
+                "\n" +
+                "***Transaction Summary: \n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "The total for this transaction is: 0.0\n" +
+                "Change due: 0.0\n" +
+                "Transaction has been finalised.\n", baos.toString());
+    }
+
+    @Test
+    public void testHandleTransactions3() {
+
+        System.setIn(new ByteArrayInputStream("3\n".getBytes()));
+
+        VendingMachine vendingMachine = new VendingMachine(10);
+        vendingMachine.handleTransaction();
+
+        assertEquals("TRANSACTION INITIALISED\n" +
+                "\n" +
+                "\n" +
+                "***Which action would you like to take?***\n" +
+                "1. Add Item\n" +
+                "2. Finalise Transaction\n" +
+                "3. Discard Transaction and Exit\n" +
+                "\n" +
+                "Exiting Transaction Handler and returning to main menu\n", baos.toString());
+    }
+
+
+    @Test
+    public void vendingMachineStartListItems() {
+
+        System.setIn(new ByteArrayInputStream("1\n4\n".getBytes()));
+        VendingMachine.main(new String[]{});
         assertEquals("Welcome to the Snack & Co. Vending Machine. Hope you enjoy the experience!\n" +
                 "\n" +
                 "Please enter the number corresponding to the option you want.\n" +
@@ -633,7 +761,8 @@ public class VendingMachineTest {
                 "2. Buy Item\n" +
                 "3. Staff Login\n" +
                 "4. Exit\n" +
-                "5. Staff Options\n" , baos.toString());
+                "5. Staff Options\n" +
+                "***PROGRAM EXITING, THANK YOU COME AGAIN\n" , baos.toString());
 
 
     }
@@ -688,6 +817,34 @@ public class VendingMachineTest {
 
 
     }
+
+    @Test
+    public void vendingMachineStartLogoutNotStaff() {
+
+        System.setIn(new ByteArrayInputStream("6\n4\n".getBytes()));
+        VendingMachine.main(new String[]{});
+
+        assertEquals("Welcome to the Snack & Co. Vending Machine. Hope you enjoy the experience!\n" +
+                "\n" +
+                "Please enter the number corresponding to the option you want.\n" +
+                "\n" +
+                "1. List items\n" +
+                "2. Buy Item\n" +
+                "3. Staff Login\n" +
+                "4. Exit\n" +
+                "5. Staff Options\n" +
+                "Please enter the number corresponding to the option you want.\n" +
+                "\n" +
+                "1. List items\n" +
+                "2. Buy Item\n" +
+                "3. Staff Login\n" +
+                "4. Exit\n" +
+                "5. Staff Options\n" +
+                "***PROGRAM EXITING, THANK YOU COME AGAIN\n", baos.toString());
+
+
+    }
+
 
     @Test
     public void vendingMachineStartStaffOption() {
