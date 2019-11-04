@@ -11,8 +11,9 @@ public class VendingTransactionTest {
     @Test 
     public void testGetTransactionSummary(){
         VendingTransaction vt = new VendingTransaction(1);
+        Drinks.Water.setPrice(10.0);
         vt.addProductToTransaction(1, Drinks.Water, 10);
-        assertEquals("Snack: Water | Quantity: 10 | Subtotal: 150.0\n", vt.getTransactionSummary()); 
+        assertEquals("Snack: Water | Quantity: 10 | Subtotal: 100.0\n", vt.getTransactionSummary());
     }
 
     @Test 
@@ -41,7 +42,7 @@ public class VendingTransactionTest {
         vt.setStatus(TransactionStatus.FINALISED);
         vt.getTotalPrice();
         vt.getTransactionItems();
-        assertEquals("Snack: Water | Quantity: 10 | Subtotal: 150.0\n", vt.getTransactionSummary()); 
+        assertEquals("Snack: Water | Quantity: 10 | Subtotal: 100.0\n", vt.getTransactionSummary());
     }
     @Test 
     public void testGetTotalPrice(){
@@ -50,6 +51,6 @@ public class VendingTransactionTest {
         vt.getTransactionItemsAsList();
         vt.cancelTransaction();
         vt.getTransactionItems();
-        assertEquals(150,Math.round(vt.getTotalPrice()));
+        assertEquals(100,Math.round(vt.getTotalPrice()));
     }
 }
