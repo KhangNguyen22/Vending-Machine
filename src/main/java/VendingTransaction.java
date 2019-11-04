@@ -86,10 +86,7 @@ public class VendingTransaction implements Transaction {
         this.transactionTotal = this.transactionTotal + costOfProducts;
     }
 
-    @Override
-    public void removeProductFromTransaction(Snacks snack, int quantity) {
 
-    }
 
 
 }

@@ -215,15 +215,56 @@ public class VendingMachineTest {
     }
 
     @Test
+    public void testAddTransactionsInvalidItemSelected(){
 
-    public void testAddTransactions(){
+        String result = ("Please select the id of the snack you want to purchase.\n" +
+        vendingMachine.listItems() +
+        "\nInvalid item\n"); 
+        System.setIn(new ByteArrayInputStream("71\n".getBytes()));
+        VendingMachine vendingMachine = new VendingMachine(10);
+        Transaction tran = vendingMachine.initialiseNewTransaction();
+        vendingMachine.addProductToTransaction(tran);
+        assertEquals(result,baos.toString());
+    }
+
+    @Test
+    public void testAddTransactionsNegativeAmountSelected(){
+
+        String result = ("Please select the id of the snack you want to purchase.\n" +
+        vendingMachine.listItems() +
+        "\nHow many would you like to purchase?\n" + "Invalid amount.\n"); 
         System.setIn(new ByteArrayInputStream("1\n-1".getBytes()));
         VendingMachine vendingMachine = new VendingMachine(10);
         Transaction tran = vendingMachine.initialiseNewTransaction();
         vendingMachine.addProductToTransaction(tran);
-        assertEquals("cat",baos.toString());
+        assertEquals(result,baos.toString());
     }
 
+    @Test
+    public void testAddTransactionsAskTooMuch(){
 
+        String result = ("Please select the id of the snack you want to purchase.\n" +
+        vendingMachine.listItems() +
+        "\nHow many would you like to purchase?\n" + "Not enough stock.\n"); 
+        System.setIn(new ByteArrayInputStream("1\n1000".getBytes()));
+        VendingMachine vendingMachine = new VendingMachine(10);
+        Transaction tran = vendingMachine.initialiseNewTransaction();
+        vendingMachine.addProductToTransaction(tran);
+        assertEquals(result,baos.toString());
+    }
+
+    @Test
+    public void testAddTransactionsValidAmountAsked(){
+
+        String result = ("Please select the id of the snack you want to purchase.\n" +
+        vendingMachine.listItems() +
+        "\nHow many would you like to purchase?\n" + "Adding to transaction\n"); 
+        System.setIn(new ByteArrayInputStream("1\n2".getBytes()));
+        VendingMachine vendingMachine = new VendingMachine(10);
+        Transaction tran = vendingMachine.initialiseNewTransaction();
+        vendingMachine.addProductToTransaction(tran);
+        assertEquals(result,baos.toString());
+    }
+   
 
 }
